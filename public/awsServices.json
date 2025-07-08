@@ -1,0 +1,196 @@
+{
+  "services": [
+    {
+      "name": "EC2",
+      "fullName": "Amazon Elastic Compute Cloud",
+      "category": "Compute",
+      "color": "#06B6D4",
+      "icon": "Amazon-EC2_48.svg",
+      "link": "https://docs.aws.amazon.com/ec2/"
+    },
+    {
+      "name": "S3",
+      "fullName": "Amazon Simple Storage Service",
+      "category": "Storage",
+      "color": "#F59E0B",
+      "icon": "Amazon-S3_48.svg",
+      "link": "https://docs.aws.amazon.com/s3/"
+    },
+    {
+      "name": "RDS",
+      "fullName": "Amazon Relational Database Service",
+      "category": "Database",
+      "color": "#EF4444",
+      "icon": "Amazon-RDS_48.svg",
+      "link": "https://docs.aws.amazon.com/rds/"
+    },
+    {
+      "name": "Lambda",
+      "fullName": "AWS Lambda",
+      "category": "Compute",
+      "color": "#06B6D4",
+      "icon": "AWS-Lambda_48.svg",
+      "link": "https://docs.aws.amazon.com/lambda/"
+    },
+    {
+      "name": "DynamoDB",
+      "fullName": "Amazon DynamoDB",
+      "category": "Database",
+      "color": "#EF4444",
+      "icon": "Amazon-DynamoDB_48.svg",
+      "link": "https://docs.aws.amazon.com/dynamodb/"
+    },
+    {
+      "name": "VPC",
+      "fullName": "Amazon Virtual Private Cloud",
+      "category": "Networking",
+      "color": "#8B5CF6",
+      "icon": "Amazon-VPC_48.svg",
+      "link": "https://docs.aws.amazon.com/vpc/"
+    },
+    {
+      "name": "IAM",
+      "fullName": "AWS Identity and Access Management",
+      "category": "Security",
+      "color": "#EC4899",
+      "icon": "AWS-IAM_48.svg",
+      "link": "https://docs.aws.amazon.com/iam/"
+    },
+    {
+      "name": "CloudFront",
+      "fullName": "Amazon CloudFront",
+      "category": "Networking",
+      "color": "#8B5CF6",
+      "icon": "Amazon-CloudFront_48.svg",
+      "link": "https://docs.aws.amazon.com/cloudfront/"
+    },
+    {
+      "name": "SageMaker",
+      "fullName": "Amazon SageMaker",
+      "category": "Machine Learning",
+      "color": "#10B981",
+      "icon": "Amazon-SageMaker_48.svg",
+      "link": "https://docs.aws.amazon.com/sagemaker/"
+    },
+    {
+      "name": "Athena",
+      "fullName": "Amazon Athena",
+      "category": "Analytics",
+      "color": "#8B5CF6",
+      "icon": "Amazon-Athena_48.svg",
+      "link": "https://docs.aws.amazon.com/athena/"
+    },
+    {
+      "name": "CloudWatch",
+      "fullName": "Amazon CloudWatch",
+      "category": "Developer Tools",
+      "color": "#06B6D4",
+      "icon": "Amazon-CloudWatch_48.svg",
+      "link": "https://docs.aws.amazon.com/cloudwatch/"
+    },
+    {
+      "name": "ECS",
+      "fullName": "Amazon Elastic Container Service",
+      "category": "Compute",
+      "color": "#06B6D4",
+      "icon": "Amazon-ECS_48.svg",
+      "link": "https://docs.aws.amazon.com/ecs/"
+    },
+    {
+      "name": "EKS",
+      "fullName": "Amazon Elastic Kubernetes Service",
+      "category": "Compute",
+      "color": "#06B6D4",
+      "icon": "Amazon-EKS_48.svg",
+      "link": "https://docs.aws.amazon.com/eks/"
+    },
+    {
+      "name": "Redshift",
+      "fullName": "Amazon Redshift",
+      "category": "Analytics",
+      "color": "#8B5CF6",
+      "icon": "Amazon-Redshift_48.svg",
+      "link": "https://docs.aws.amazon.com/redshift/"
+    },
+    {
+      "name": "ElastiCache",
+      "fullName": "Amazon ElastiCache",
+      "category": "Database",
+      "color": "#EF4444",
+      "icon": "Amazon-ElastiCache_48.svg",
+      "link": "https://docs.aws.amazon.com/elasticache/"
+    },
+    {
+      "name": "Route 53",
+      "fullName": "Amazon Route 53",
+      "category": "Networking",
+      "color": "#8B5CF6",
+      "icon": "Amazon-Route-53_48.svg",
+      "link": "https://docs.aws.amazon.com/route53/"
+    },
+    {
+      "name": "API Gateway",
+      "fullName": "Amazon API Gateway",
+      "category": "Networking",
+      "color": "#8B5CF6",
+      "icon": "Amazon-API-Gateway_48.svg",
+      "link": "https://docs.aws.amazon.com/apigateway/"
+    },
+    {
+      "name": "SNS",
+      "fullName": "Amazon Simple Notification Service",
+      "category": "Developer Tools",
+      "color": "#06B6D4",
+      "icon": "Amazon-SNS_48.svg",
+      "link": "https://docs.aws.amazon.com/sns/"
+    },
+    {
+      "name": "SQS",
+      "fullName": "Amazon Simple Queue Service",
+      "category": "Developer Tools",
+      "color": "#06B6D4",
+      "icon": "Amazon-SQS_48.svg",
+      "link": "https://docs.aws.amazon.com/sqs/"
+    },
+    {
+      "name": "CloudFormation",
+      "fullName": "AWS CloudFormation",
+      "category": "Developer Tools",
+      "color": "#06B6D4",
+      "icon": "AWS-CloudFormation_48.svg",
+      "link": "https://docs.aws.amazon.com/cloudformation/"
+    },
+    {
+      "name": "EBS",
+      "fullName": "Amazon Elastic Block Store",
+      "category": "Storage",
+      "color": "#F59E0B",
+      "icon": "Amazon-EBS_48.svg",
+      "link": "https://docs.aws.amazon.com/ebs/"
+    },
+    {
+      "name": "EFS",
+      "fullName": "Amazon Elastic File System",
+      "category": "Storage",
+      "color": "#F59E0B",
+      "icon": "Amazon-EFS_48.svg",
+      "link": "https://docs.aws.amazon.com/efs/"
+    },
+    {
+      "name": "GuardDuty",
+      "fullName": "Amazon GuardDuty",
+      "category": "Security",
+      "color": "#EC4899",
+      "icon": "Amazon-GuardDuty_48.svg",
+      "link": "https://docs.aws.amazon.com/guardduty/"
+    },
+    {
+      "name": "Rekognition",
+      "fullName": "Amazon Rekognition",
+      "category": "Machine Learning",
+      "color": "#10B981",
+      "icon": "Amazon-Rekognition_48.svg",
+      "link": "https://docs.aws.amazon.com/rekognition/"
+    }
+  ]
+}
