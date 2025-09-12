@@ -809,8 +809,7 @@ export default function ArchitectureBuilder() {
               </Select>
               <Button
                 onClick={() => setIsConnecting(!isConnecting)}
-                variant={isConnecting ?```text
-"default" : "outline"}
+                variant={isConnecting ? "default" : "outline"}
                 size="sm"
               >
                 <Share className="w-4 h-4 mr-2" />
