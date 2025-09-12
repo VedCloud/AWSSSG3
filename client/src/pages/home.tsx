@@ -137,7 +137,7 @@ export default function Home() {
                 <Link href="/learning-paths">
                   <Button 
                     variant="outline" 
-                    className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600 hover:border-blue-700"
+                    className="bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90"
                   >
                     <BookOpen className="w-4 h-4 mr-2" />
                     Learning Paths
@@ -153,7 +153,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Link href="/challenge-mode">
-                  <Button size="lg" variant="outline" className="border-2 border-yellow-500 text-yellow-600 hover:bg-yellow-50 dark:hover:bg-yellow-950">
+                  <Button size="lg" variant="outline" className="bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90">
                     <Trophy className="w-5 h-5 mr-2" />
                     Challenge Mode
                   </Button>
