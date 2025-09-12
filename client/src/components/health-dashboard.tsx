@@ -132,7 +132,6 @@ export function HealthDashboard() {
           
           <div className="flex items-center gap-2">
             <Button
-              variant="outline"
               size="sm"
               onClick={() => setIsAutoRefresh(!isAutoRefresh)}
               className={isAutoRefresh ? "bg-green-50 border-green-200 text-green-700" : ""}
