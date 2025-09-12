@@ -270,26 +270,26 @@ export default function Home() {
 
         {/* Tabs for All Services / Favorites */}
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "all" | "favorites")} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto mb-8 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 border border-blue-200 dark:border-blue-800">
+          <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto mb-8 bg-slate-800 dark:bg-slate-700 border border-slate-600">
             <TabsTrigger 
               value="all" 
-              className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white text-blue-700 dark:text-blue-200 hover:text-blue-800 dark:hover:text-white transition-colors"
+              className="flex items-center gap-2 data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 hover:text-white transition-colors"
             >
               <LayoutGrid className="w-4 h-4" />
               All Services
               {services && (
-                <span className="text-xs bg-blue-500 text-white rounded-full px-2 py-1 ml-2">
+                <span className="text-xs bg-slate-600 text-slate-300 rounded-full px-2 py-1 ml-2">
                   {services.length}
                 </span>
               )}
             </TabsTrigger>
             <TabsTrigger 
               value="favorites" 
-              className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white text-blue-700 dark:text-blue-200 hover:text-blue-800 dark:hover:text-white transition-colors"
+              className="flex items-center gap-2 data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 hover:text-white transition-colors"
             >
               <Star className="w-4 h-4" />
               Favorites
-              <span className="text-xs bg-blue-500 text-white rounded-full px-2 py-1 ml-2">
+              <span className="text-xs bg-slate-600 text-slate-300 rounded-full px-2 py-1 ml-2">
                 {favorites.size}
               </span>
             </TabsTrigger>
