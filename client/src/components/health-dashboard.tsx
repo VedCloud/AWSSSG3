@@ -105,7 +105,7 @@ export function HealthDashboard() {
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="w-5 h-5" />
