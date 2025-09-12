@@ -144,10 +144,10 @@ export function ServiceTile({ service, onClick, onDeepDive, viewMode, isFavorite
               relative group rounded-xl shadow-sm border transition-all duration-300 cursor-pointer animate-fade-in
               ${gradientClass}
               ${viewMode === "compact" ? "tile-compact" : "tile-expanded"}
-              ${isHovered ? "shadow-lg scale-105" : ""}
+              ${isHovered ? "shadow-lg scale-105 border-blue-300 dark:border-blue-600" : "border-blue-100 dark:border-blue-900/50"}
               ${isBouncing ? "animate-bounce" : ""}
               hover:shadow-xl hover:scale-105 hover:animate-pulse
-              dark:bg-slate-800/50
+              dark:bg-slate-800/50 bg-gradient-to-br from-blue-50/30 to-indigo-50/30 dark:from-blue-900/10 dark:to-indigo-900/10
             `}
             onClick={handleClick}
             onMouseEnter={() => setIsHovered(true)}

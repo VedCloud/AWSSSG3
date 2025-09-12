@@ -911,7 +911,7 @@ export default function ArchitectureBuilder() {
                         return priorityOrder[b.priority] - priorityOrder[a.priority];
                       })
                       .map((suggestion, index) => (
-                      <Card key={index} className="p-3 hover:shadow-md transition-shadow">
+                      <Card key={index} className="p-3 hover:shadow-md transition-shadow bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center space-x-2">
                             <Badge className={`text-xs flex items-center space-x-1 ${getSuggestionBadgeColor(suggestion.priority)}`}>
@@ -957,7 +957,7 @@ export default function ArchitectureBuilder() {
                   Architecture Templates
                 </h3>
                 {ARCHITECTURE_TEMPLATES.map((template) => (
-                  <Card key={template.id} className="cursor-pointer hover:shadow-md transition-shadow">
+                  <Card key={template.id} className="cursor-pointer hover:shadow-md transition-shadow bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm">{template.name}</CardTitle>
                       <Badge variant="secondary" className="text-xs w-fit">

@@ -382,7 +382,7 @@ export default function ChallengeMode() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {CHALLENGE_SCENARIOS.map((scenario) => (
-              <Card key={scenario.id} className="hover:shadow-lg transition-shadow">
+              <Card key={scenario.id} className="hover:shadow-lg transition-shadow bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-lg">{scenario.title}</CardTitle>

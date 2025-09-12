@@ -1136,7 +1136,7 @@ export default function LearningPaths() {
 
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {learningPaths.map((path) => (
-            <Card key={path.id} className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setSelectedPath(path.id)}>
+            <Card key={path.id} className="hover:shadow-lg transition-shadow cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800" onClick={() => setSelectedPath(path.id)}>
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className={`p-3 rounded-lg ${path.color} text-white`}>
