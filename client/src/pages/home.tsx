@@ -1,13 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Search, Sun, Moon, Grid3X3, LayoutGrid, Star, Trophy, BookOpen } from "lucide-react";
+import { Search, Grid3X3, LayoutGrid, Star, Trophy, BookOpen } from "lucide-react";
 import { SiAmazonwebservices } from "react-icons/si";
 import { Link } from "wouter";
 import { ServiceTile } from "@/components/service-tile";
 import { CategoryLegend } from "@/components/category-legend";
 import { HealthDashboard } from "@/components/health-dashboard";
 import { ServiceDeepDiveModal } from "@/components/service-deep-dive-modal";
-import { useTheme } from "@/components/theme-provider";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -16,7 +15,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { type AwsService, CertificationTrackEnum } from "@shared/schema";
 
 export default function Home() {
-  const { theme, toggleTheme } = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedCertificationTrack, setSelectedCertificationTrack] = useState<string>("all");
@@ -160,19 +158,6 @@ export default function Home() {
                     Challenge Mode
                   </Button>
                 </Link>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Sun className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleTheme}
-                  className="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 dark:bg-aws-orange transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-aws-orange focus:ring-offset-2 dark:focus:ring-offset-slate-800"
-                >
-                  <span className="sr-only">Toggle dark mode</span>
-                  <span className="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5" />
-                </Button>
-                <Moon className="w-4 h-4 text-gray-400 dark:text-aws-orange" />
               </div>
             </div>
           </div>
