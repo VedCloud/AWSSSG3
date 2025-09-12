@@ -153,7 +153,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Link href="/challenge-mode">
-                  <Button size="lg" variant="outline" className="bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90">
+                  <Button variant="outline" className="bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90">
                     <Trophy className="w-5 h-5 mr-2" />
                     Challenge Mode
                   </Button>
