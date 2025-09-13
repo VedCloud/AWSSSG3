@@ -43,12 +43,14 @@ The application uses a single `aws_services` table with the following structure:
 - `GET /api/services/category/:category` - Filter services by category
 - `GET /api/services/search?q=query` - Search services by name or description
 - `POST /api/services` - Create new service (admin functionality)
+- `GET /api/news` - Fetch live AWS news from official RSS feeds (cached for 5 minutes)
 
 ### UI Components
 - **Service Tiles**: Interactive cards displaying service information
 - **Search & Filter**: Real-time search with category filtering
-- **Theme Support**: Light/dark mode toggle
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **News Feed**: Live AWS updates from official blogs and announcements
+- **Health Dashboard**: Real-time service status monitoring
+- **Responsive Design**: Mobile-first approach with Tailwind CSS and consistent AWS orange theme
 
 ## Data Flow
 
@@ -65,6 +67,8 @@ The application uses a single `aws_services` table with the following structure:
 - **UI Library**: Radix UI primitives with shadcn/ui
 - **Icons**: Lucide React icons + React Icons for AWS branding
 - **Validation**: Zod for runtime type checking
+- **RSS Parsing**: rss-parser for fetching AWS news feeds
+- **Data Fetching**: React Query for caching and real-time updates
 
 ### Development Tools
 - **Bundler**: Vite with React plugin
@@ -97,6 +101,7 @@ Changelog:
 - July 07, 2025. Added comprehensive microservices category with 25 popular services including MongoDB, Redis, PostgreSQL, Docker, Kubernetes, and monitoring tools
 - July 07, 2025. Added certification track highlighting feature with 15 AWS certification tracks and comprehensive filtering system. All 240+ services now include relevant certification track assignments for AWS learning paths.
 - July 07, 2025. Implemented real-time AWS service status monitoring with Health Dashboard integration. Features include operational/degraded/outage status indicators, status dots on service tiles, auto-refresh functionality, and simulated health check API endpoints.
+- September 13, 2025. Added AWS News page with live updates from official AWS RSS feeds. Features include real-time news fetching from AWS blogs and announcements, 5-minute server-side caching, automatic refresh every 5 minutes, dark theme with AWS orange accents, and comprehensive error handling. Backend uses null-safe RSS parsing with parallel feed fetching for optimal performance.
 
 ## User Preferences
 
