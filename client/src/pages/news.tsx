@@ -79,25 +79,62 @@ export default function News() {
     }
   };
 
-  // Color categorization for news categories
-  const getCategoryColor = (category: string): string => {
-    const lowerCategory = category.toLowerCase();
+  // Color categorization for news items based on content and source
+  const getCategoryColor = (item: NewsItem): string => {
+    const title = (item.title || '').toLowerCase();
+    const source = (item.source || '').toLowerCase();
+    const content = (item.contentSnippet || '').toLowerCase();
     
-    if (lowerCategory.includes('security') || lowerCategory.includes('compliance')) {
+    // Check for security-related content
+    if (title.includes('security') || content.includes('security') || source.includes('security') || 
+        title.includes('compliance') || content.includes('compliance')) {
       return 'bg-red-500/20 text-red-400 border-red-500/30';
-    } else if (lowerCategory.includes('announcement') || lowerCategory.includes('launch') || lowerCategory.includes('new')) {
-      return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-    } else if (lowerCategory.includes('update') || lowerCategory.includes('improvement')) {
-      return 'bg-green-500/20 text-green-400 border-green-500/30';
-    } else if (lowerCategory.includes('blog') || lowerCategory.includes('article')) {
-      return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-    } else if (lowerCategory.includes('service') || lowerCategory.includes('feature')) {
-      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-    } else if (lowerCategory.includes('guide') || lowerCategory.includes('tutorial') || lowerCategory.includes('how')) {
-      return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
-    } else {
-      return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
+    
+    // Check for announcements and launches
+    if (title.includes('announcement') || title.includes('launch') || title.includes('introduces') ||
+        title.includes('adds support') || title.includes('now supports') || title.includes('available')) {
+      return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+    }
+    
+    // Check for updates and improvements
+    if (title.includes('update') || title.includes('improvement') || title.includes('enhanced') ||
+        title.includes('improved') || content.includes('enhancement')) {
+      return 'bg-green-500/20 text-green-400 border-green-500/30';
+    }
+    
+    // Check for blog content
+    if (source.includes('blog') || source.includes('article')) {
+      return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+    }
+    
+    // Check for service and feature content
+    if (title.includes('service') || title.includes('feature') || content.includes('service') ||
+        title.includes('amazon') || title.includes('aws')) {
+      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+    }
+    
+    // Check for guides and tutorials
+    if (title.includes('guide') || title.includes('tutorial') || title.includes('how to') ||
+        content.includes('learn more') || content.includes('documentation')) {
+      return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
+    }
+    
+    // Default color
+    return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+  };
+
+  // Get appropriate category label based on the color
+  const getCategoryLabel = (item: NewsItem): string => {
+    const color = getCategoryColor(item);
+    
+    if (color.includes('red')) return 'Security & Compliance';
+    if (color.includes('blue')) return 'Announcements & Launches';
+    if (color.includes('green')) return 'Updates & Improvements';
+    if (color.includes('purple')) return 'Blog Articles';
+    if (color.includes('yellow')) return 'Services & Features';
+    if (color.includes('cyan')) return 'Guides & Tutorials';
+    return 'General';
   };
 
   // Legend data for category colors
@@ -274,24 +311,23 @@ export default function News() {
                       {item.contentSnippet}
                     </p>
                   )}
-                  {item.categories && item.categories.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {item.categories.slice(0, 3).map((category, catIndex) => (
-                        <Badge
-                          key={catIndex}
-                          variant="outline"
-                          className={`text-xs ${getCategoryColor(category)}`}
-                        >
-                          {category}
-                        </Badge>
-                      ))}
-                      {item.categories.length > 3 && (
-                        <Badge variant="outline" className="text-xs bg-gray-500/20 text-gray-400 border-gray-500/30">
-                          +{item.categories.length - 3} more
-                        </Badge>
-                      )}
-                    </div>
-                  )}
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${getCategoryColor(item)}`}
+                    >
+                      {getCategoryLabel(item)}
+                    </Badge>
+                    {item.categories && item.categories.length > 0 && item.categories.slice(0, 2).map((category, catIndex) => (
+                      <Badge
+                        key={catIndex}
+                        variant="outline"
+                        className="text-xs bg-gray-500/20 text-gray-400 border-gray-500/30"
+                      >
+                        {category}
+                      </Badge>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             ))}
