@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Newspaper, ExternalLink, RefreshCw, Clock, ArrowLeft, Info } from "lucide-react";
+import { Newspaper, ExternalLink, RefreshCw, Clock, ArrowLeft, Info, ChevronDown, ChevronUp } from "lucide-react";
 import { SiAmazonwebservices } from "react-icons/si";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,7 @@ interface NewsResponse {
 
 export default function News() {
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
+  const [showLegend, setShowLegend] = useState<boolean>(false);
 
   const { data: newsData, isLoading, error, refetch } = useQuery<NewsResponse>({
     queryKey: ["/api/news"],
@@ -138,27 +139,40 @@ export default function News() {
             Stay up-to-date with the latest AWS announcements, new services, and important updates
           </p>
 
-          {/* Color Legend */}
-          <Card className="bg-gray-900 border-gray-800 mb-6">
-            <CardHeader className="pb-3">
-              <div className="flex items-center gap-2">
-                <Info className="w-5 h-5 text-aws-orange" />
-                <h3 className="text-lg font-semibold">Category Legend</h3>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {categoryLegend.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <Badge variant="outline" className={`${item.color} min-w-fit`}>
-                      {item.label}
-                    </Badge>
-                    <span className="text-xs text-gray-500">{item.description}</span>
+          {/* Color Legend Toggle */}
+          <div className="mb-6">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowLegend(!showLegend)}
+              className="text-gray-400 hover:text-white mb-3"
+            >
+              <Info className="w-4 h-4 mr-2" />
+              Category Legend
+              {showLegend ? (
+                <ChevronUp className="w-4 h-4 ml-2" />
+              ) : (
+                <ChevronDown className="w-4 h-4 ml-2" />
+              )}
+            </Button>
+            
+            {showLegend && (
+              <Card className="bg-gray-900 border-gray-800">
+                <CardContent className="pt-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {categoryLegend.map((item, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <Badge variant="outline" className={`${item.color} min-w-fit`}>
+                          {item.label}
+                        </Badge>
+                        <span className="text-xs text-gray-500">{item.description}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
+            )}
+          </div>
           
           {/* Refresh Controls */}
           <div className="flex items-center justify-between">
