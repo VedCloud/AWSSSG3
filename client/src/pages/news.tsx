@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Newspaper, ExternalLink, RefreshCw, Clock } from "lucide-react";
+import { Newspaper, ExternalLink, RefreshCw, Clock, ArrowLeft, Info } from "lucide-react";
 import { SiAmazonwebservices } from "react-icons/si";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "wouter";
 
 interface NewsItem {
   title: string;
@@ -77,11 +78,53 @@ export default function News() {
     }
   };
 
+  // Color categorization for news categories
+  const getCategoryColor = (category: string): string => {
+    const lowerCategory = category.toLowerCase();
+    
+    if (lowerCategory.includes('security') || lowerCategory.includes('compliance')) {
+      return 'bg-red-500/20 text-red-400 border-red-500/30';
+    } else if (lowerCategory.includes('announcement') || lowerCategory.includes('launch') || lowerCategory.includes('new')) {
+      return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+    } else if (lowerCategory.includes('update') || lowerCategory.includes('improvement')) {
+      return 'bg-green-500/20 text-green-400 border-green-500/30';
+    } else if (lowerCategory.includes('blog') || lowerCategory.includes('article')) {
+      return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+    } else if (lowerCategory.includes('service') || lowerCategory.includes('feature')) {
+      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+    } else if (lowerCategory.includes('guide') || lowerCategory.includes('tutorial') || lowerCategory.includes('how')) {
+      return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
+    } else {
+      return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+    }
+  };
+
+  // Legend data for category colors
+  const categoryLegend = [
+    { color: 'bg-red-500/20 text-red-400 border-red-500/30', label: 'Security & Compliance', description: 'Security updates and compliance information' },
+    { color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', label: 'Announcements & Launches', description: 'New service announcements and launches' },
+    { color: 'bg-green-500/20 text-green-400 border-green-500/30', label: 'Updates & Improvements', description: 'Service updates and improvements' },
+    { color: 'bg-purple-500/20 text-purple-400 border-purple-500/30', label: 'Blog Articles', description: 'Blog posts and articles' },
+    { color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30', label: 'Services & Features', description: 'Service and feature information' },
+    { color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30', label: 'Guides & Tutorials', description: 'How-to guides and tutorials' },
+    { color: 'bg-gray-500/20 text-gray-400 border-gray-500/30', label: 'General', description: 'General AWS content' }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
+          {/* Back Button */}
+          <div className="mb-4">
+            <Button asChild variant="ghost" size="sm" className="text-gray-400 hover:text-white">
+              <Link href="/">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Home
+              </Link>
+            </Button>
+          </div>
+
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-aws-orange rounded-lg">
               <Newspaper className="w-6 h-6 text-white" />
@@ -94,6 +137,28 @@ export default function News() {
           <p className="text-gray-400 text-lg mb-4">
             Stay up-to-date with the latest AWS announcements, new services, and important updates
           </p>
+
+          {/* Color Legend */}
+          <Card className="bg-gray-900 border-gray-800 mb-6">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <Info className="w-5 h-5 text-aws-orange" />
+                <h3 className="text-lg font-semibold">Category Legend</h3>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {categoryLegend.map((item, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <Badge variant="outline" className={`${item.color} min-w-fit`}>
+                      {item.label}
+                    </Badge>
+                    <span className="text-xs text-gray-500">{item.description}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
           
           {/* Refresh Controls */}
           <div className="flex items-center justify-between">
@@ -201,13 +266,13 @@ export default function News() {
                         <Badge
                           key={catIndex}
                           variant="outline"
-                          className="text-xs border-gray-600 text-gray-400"
+                          className={`text-xs ${getCategoryColor(category)}`}
                         >
                           {category}
                         </Badge>
                       ))}
                       {item.categories.length > 3 && (
-                        <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
+                        <Badge variant="outline" className="text-xs bg-gray-500/20 text-gray-400 border-gray-500/30">
                           +{item.categories.length - 3} more
                         </Badge>
                       )}
