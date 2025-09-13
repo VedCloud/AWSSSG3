@@ -1,0 +1,245 @@
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Newspaper, ExternalLink, RefreshCw, Clock } from "lucide-react";
+import { SiAmazonwebservices } from "react-icons/si";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+
+interface NewsItem {
+  title: string;
+  link: string;
+  pubDate: string;
+  contentSnippet: string;
+  source: string;
+  categories: string[];
+}
+
+interface NewsResponse {
+  items: NewsItem[];
+  lastUpdated: string;
+  totalItems: number;
+}
+
+export default function News() {
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
+
+  const { data: newsData, isLoading, error, refetch } = useQuery<NewsResponse>({
+    queryKey: ["/api/news"],
+    refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
+    staleTime: 2 * 60 * 1000, // Consider data stale after 2 minutes
+  });
+
+  // Update last refresh time when data is successfully fetched (including auto-refetch)
+  useEffect(() => {
+    if (newsData) {
+      setLastRefresh(new Date());
+    }
+  }, [newsData]);
+
+  const handleRefresh = async () => {
+    await refetch();
+  };
+
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch {
+      return 'Recently';
+    }
+  };
+
+  const formatTimeAgo = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffMs = now.getTime() - date.getTime();
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffDays = Math.floor(diffHours / 24);
+
+      if (diffDays > 0) {
+        return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+      } else if (diffHours > 0) {
+        return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+      } else {
+        return 'Recently';
+      }
+    } catch {
+      return 'Recently';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-950 text-white">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-aws-orange rounded-lg">
+              <Newspaper className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex items-center gap-2">
+              <SiAmazonwebservices className="w-8 h-8 text-aws-orange" />
+              <h1 className="text-3xl font-bold">AWS News & Updates</h1>
+            </div>
+          </div>
+          <p className="text-gray-400 text-lg mb-4">
+            Stay up-to-date with the latest AWS announcements, new services, and important updates
+          </p>
+          
+          {/* Refresh Controls */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4 text-sm text-gray-400">
+              <div className="flex items-center gap-1">
+                <Clock className="w-4 h-4" />
+                <span>Last updated: {formatDate(newsData?.lastUpdated || lastRefresh.toISOString())}</span>
+              </div>
+              {newsData && (
+                <span>{newsData.totalItems} articles available</span>
+              )}
+            </div>
+            <Button
+              onClick={handleRefresh}
+              disabled={isLoading}
+              variant="outline"
+              size="sm"
+              className="bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90"
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+          </div>
+        </div>
+
+        {/* Loading State */}
+        {isLoading && (
+          <div className="space-y-4">
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="bg-gray-900 border-gray-800">
+                <CardHeader>
+                  <Skeleton className="h-6 w-3/4 bg-gray-700" />
+                  <Skeleton className="h-4 w-1/4 bg-gray-700" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-4 w-full bg-gray-700 mb-2" />
+                  <Skeleton className="h-4 w-2/3 bg-gray-700" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <Card className="bg-red-900/20 border-red-800">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-2 text-red-400">
+                <Newspaper className="w-5 h-5" />
+                <span className="font-medium">Failed to load AWS news</span>
+              </div>
+              <p className="text-gray-400 mt-2">
+                Unable to fetch the latest AWS updates. Please try refreshing or check your connection.
+              </p>
+              <Button
+                onClick={handleRefresh}
+                variant="outline"
+                className="mt-4 border-red-600 text-red-400 hover:bg-red-900/30"
+              >
+                Try Again
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* News Items */}
+        {newsData && newsData.items && (
+          <div className="space-y-4">
+            {newsData.items.map((item, index) => (
+              <Card key={`${item.link}-${index}`} className="bg-gray-900 border-gray-800 hover:border-gray-700 transition-colors">
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg leading-tight hover:text-aws-orange transition-colors">
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-start gap-2"
+                        >
+                          <span>{item.title}</span>
+                          <ExternalLink className="w-4 h-4 mt-1 flex-shrink-0 opacity-60" />
+                        </a>
+                      </CardTitle>
+                      <div className="flex items-center gap-3 mt-2 text-sm text-gray-400">
+                        <Badge variant="secondary" className="bg-aws-orange/20 text-aws-orange border-aws-orange/30">
+                          {item.source}
+                        </Badge>
+                        <span>{formatTimeAgo(item.pubDate)}</span>
+                        <span className="text-gray-500">•</span>
+                        <span>{formatDate(item.pubDate)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  {item.contentSnippet && (
+                    <p className="text-gray-300 leading-relaxed">
+                      {item.contentSnippet}
+                    </p>
+                  )}
+                  {item.categories && item.categories.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {item.categories.slice(0, 3).map((category, catIndex) => (
+                        <Badge
+                          key={catIndex}
+                          variant="outline"
+                          className="text-xs border-gray-600 text-gray-400"
+                        >
+                          {category}
+                        </Badge>
+                      ))}
+                      {item.categories.length > 3 && (
+                        <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
+                          +{item.categories.length - 3} more
+                        </Badge>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {/* No Results */}
+        {newsData && (!newsData.items || newsData.items.length === 0) && (
+          <Card className="bg-gray-900 border-gray-800">
+            <CardContent className="p-8 text-center">
+              <Newspaper className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-400 mb-2">No news available</h3>
+              <p className="text-gray-500">
+                No AWS news items could be loaded at this time. Try refreshing to check for updates.
+              </p>
+              <Button
+                onClick={handleRefresh}
+                variant="outline"
+                className="mt-4 bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Refresh News
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import LearningPaths from "@/pages/learning-paths";
 import ArchitectureBuilder from "@/pages/architecture-builder";
 import ChallengeMode from "@/pages/challenge-mode";
+import News from "@/pages/news";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/learning-paths" component={LearningPaths} />
       <Route path="/architecture-builder" component={ArchitectureBuilder} />
       <Route path="/challenge-mode" component={ChallengeMode} />
+      <Route path="/news" component={News} />
       <Route component={NotFound} />
     </Switch>
   );

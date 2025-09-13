@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Search, Grid3X3, LayoutGrid, Star, Trophy, BookOpen } from "lucide-react";
+import { Search, Grid3X3, LayoutGrid, Star, Trophy, BookOpen, Newspaper } from "lucide-react";
 import { SiAmazonwebservices } from "react-icons/si";
 import { Link } from "wouter";
 import { ServiceTile } from "@/components/service-tile";
@@ -156,6 +156,12 @@ export default function Home() {
                   <Button variant="outline" className="bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90">
                     <Trophy className="w-5 h-5 mr-2" />
                     Challenge Mode
+                  </Button>
+                </Link>
+                <Link href="/news">
+                  <Button variant="outline" className="bg-aws-orange hover:bg-aws-orange/90 text-white border-aws-orange hover:border-aws-orange/90">
+                    <Newspaper className="w-4 h-4 mr-2" />
+                    AWS News
                   </Button>
                 </Link>
               </div>

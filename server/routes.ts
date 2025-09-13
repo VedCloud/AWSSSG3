@@ -3,6 +3,11 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertAwsServiceSchema } from "@shared/schema";
 import { z } from "zod";
+import Parser from "rss-parser";
+
+// Simple in-memory cache for news data
+let newsCache: { data: any; timestamp: number } | null = null;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -132,6 +137,80 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         res.status(500).json({ message: "Failed to create service" });
       }
+    }
+  });
+
+  // Get AWS news from official RSS feeds
+  app.get("/api/news", async (req, res) => {
+    try {
+      // Check cache first
+      const now = Date.now();
+      if (newsCache && (now - newsCache.timestamp) < CACHE_DURATION) {
+        return res.json(newsCache.data);
+      }
+      const parser = new Parser({
+        timeout: 10000,
+        headers: {
+          'User-Agent': 'AWS Services Explorer'
+        }
+      });
+
+      // AWS official news sources
+      const feedUrls = [
+        'https://aws.amazon.com/about-aws/whats-new/recent/feed/',
+        'https://aws.amazon.com/blogs/aws/feed/',
+        'https://aws.amazon.com/blogs/security/feed/'
+      ];
+
+      // Fetch all feeds in parallel for better performance
+      const feedPromises = feedUrls.map(async (feedUrl) => {
+        try {
+          const feed = await parser.parseURL(feedUrl);
+          const items = feed.items.slice(0, 10).map(item => {
+            // Fix null-safe content snippet handling
+            const contentText = item.content?.replace(/<[^>]*>/g, '') ?? '';
+            const snippet = item.contentSnippet ?? (contentText.length > 0 ? contentText.substring(0, 200) : '');
+            
+            return {
+              title: item.title,
+              link: item.link,
+              pubDate: item.isoDate || item.pubDate, // Use isoDate if available, fallback to pubDate
+              contentSnippet: snippet ? `${snippet}...` : '',
+              source: feed.title || 'AWS News',
+              categories: item.categories || []
+            };
+          });
+          return items;
+        } catch (feedError) {
+          console.error(`Failed to fetch feed ${feedUrl}:`, feedError);
+          return [];
+        }
+      });
+
+      const feedResults = await Promise.all(feedPromises);
+      const allItems = feedResults.flat();
+
+      // Sort by date (newest first) and limit to 50 items
+      const sortedItems = allItems
+        .sort((a, b) => new Date(b.pubDate || 0).getTime() - new Date(a.pubDate || 0).getTime())
+        .slice(0, 50);
+
+      const responseData = { 
+        items: sortedItems,
+        lastUpdated: new Date().toISOString(),
+        totalItems: sortedItems.length
+      };
+
+      // Cache the response
+      newsCache = {
+        data: responseData,
+        timestamp: now
+      };
+
+      res.json(responseData);
+    } catch (error) {
+      console.error('News fetch error:', error);
+      res.status(500).json({ message: "Failed to fetch AWS news" });
     }
   });
 
