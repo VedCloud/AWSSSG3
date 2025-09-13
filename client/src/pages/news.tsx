@@ -277,13 +277,13 @@ export default function News() {
 
         {/* News Items */}
         {newsData && newsData.items && (
-          <div className="space-y-4">
+          <div className="space-y-2">
             {newsData.items.map((item, index) => (
               <Card key={`${item.link}-${index}`} className="bg-gray-900 border-gray-800 hover:border-gray-700 transition-colors">
-                <CardHeader className="pb-3">
+                <CardHeader className="pb-2 pt-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <CardTitle className="text-lg leading-tight hover:text-aws-orange transition-colors">
+                      <CardTitle className="text-base leading-tight hover:text-aws-orange transition-colors">
                         <a
                           href={item.link}
                           target="_blank"
@@ -294,7 +294,7 @@ export default function News() {
                           <ExternalLink className="w-4 h-4 mt-1 flex-shrink-0 opacity-60" />
                         </a>
                       </CardTitle>
-                      <div className="flex items-center gap-3 mt-2 text-sm text-gray-400">
+                      <div className="flex items-center gap-3 mt-1 text-sm text-gray-400">
                         <Badge variant="secondary" className="bg-aws-orange/20 text-aws-orange border-aws-orange/30">
                           {item.source}
                         </Badge>
@@ -305,13 +305,13 @@ export default function News() {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="pt-0">
+                <CardContent className="pt-0 pb-4">
                   {item.contentSnippet && (
-                    <p className="text-gray-300 leading-relaxed">
-                      {item.contentSnippet}
+                    <p className="text-gray-300 leading-snug text-sm">
+                      {item.contentSnippet.length > 150 ? `${item.contentSnippet.substring(0, 150)}...` : item.contentSnippet}
                     </p>
                   )}
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <div className="flex flex-wrap gap-1 mt-2">
                     <Badge
                       variant="outline"
                       className={`text-xs ${getCategoryColor(item)}`}
